@@ -1,0 +1,19 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-4">Parking Slots</h1>
+
+  <div class="grid grid-cols-8" *ngIf="showSlots">
+    <!-- Loop through slots -->
+    <div *ngFor="let slot of slots" [ngClass]="{
+      'bg-[#d0dae3] cursor-pointer': slot.status === 'available',
+      'bg-[#ff3f50] text-white': slot.status === 'occupied',
+      'border-dashed border-4 border-[#d0dae3] text-[#d0dae3]': slot.status === 'out-of-service'
+      }" class="w-24 h-44 font-bold rounded-lg flex items-center justify-center mb-4">
+      P{{ slot.number }}
+    </div>
+  </div>
+
+  <!-- if slots not avaiable -->
+  <div *ngIf="!showSlots" class="text-center">
+    <p class="text-lg">No slots available</p>
+  </div>
+</div>
