@@ -40,7 +40,7 @@
         <label class="block text-gray-700 font-bold mb-2" for="end_hour">End Hour <span class="text-red-600">*</span></label>
         <select (change)="calculatePrice()" formControlName="endHour" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="end_hour" name="end_hour" required>
           <option value="">Select End Hour</option>
-          <option *ngFor="let hours of workingHoursRange" value="{{hours}}">{{hours}}</option>
+          <option *ngFor="let hours of endHours" value="{{hours}}">{{hours}}</option>
         </select>
       </div>
 

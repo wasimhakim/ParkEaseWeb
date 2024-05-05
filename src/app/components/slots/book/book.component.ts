@@ -15,6 +15,7 @@ import { WORKING_HOURS_RANGE, USER_INFO } from '../../../shared/common.const';
 export class BookComponent {
   errorMessage: string = '';
   workingHoursRange = window.localStorage.getItem(WORKING_HOURS_RANGE)?.split(',');
+  endHours: string[] = [];
   slotId: number = 0;
   slot: any = {};
   bookingDate: any = {};
@@ -37,6 +38,12 @@ export class BookComponent {
     this.slotId = this.route.snapshot.params['id'];
     this.bookingDate = this.route.snapshot.queryParams['date'] || new Date().toISOString().split('T')[0];
     this.bookingStartHour = this.route.snapshot.queryParams['hour'] || `${new Date().getHours()}:00`;
+
+    this.workingHoursRange?.forEach((hour) => {
+      if(hour > this.bookingStartHour) {
+        this.endHours.push(hour);
+      }
+    });
 
     this.appService.getSlot(this.slotId).subscribe
     (response => {
