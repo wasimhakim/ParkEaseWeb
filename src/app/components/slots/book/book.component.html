@@ -1,0 +1,58 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-4">Book Slot - P{{ slot.number }}</h1>
+
+  <span *ngIf="errorMessage" class="text-red-500 text-sm font-medium">{{ errorMessage }}</span>
+
+<!-- Slot Creation Form -->
+<form [formGroup]="bookingForm" (ngSubmit)="bookSlot()">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Date -->
+    <div class="flex justify-evenly">
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2">Date:</label>
+        <span class="text-gray-800">{{ bookingDate }}</span>
+      </div>
+      <div class="my-b">
+        <label class="block text-gray-700 font-bold mb-2">Start Hour:</label>
+        <span class="text-gray-800">{{ bookingStartHour }}</span>
+      </div>
+
+    </div>
+
+    <!-- Features -->
+    <div class="mb-4" *ngIf="slot?.features">
+      <ul class="list-disc list-inside text-gray-800">
+        <li *ngIf="slot?.features['has_shade']">Shade</li>
+        <li *ngIf="slot?.features['ev_charging']">EV Charging</li>
+        <li *ngIf="slot?.features['disabled_people_only']">For Disabled</li>
+      </ul>
+    </div>
+
+    <div class="flex flex-col items-end" *ngIf="canBook">
+      <div class="mb-4 w-full">
+        <label class="block text-gray-700 font-bold mb-2" for="start_hour">Start Hour <span class="text-red-600">*</span></label>
+        <span class="text-gray-800">{{ bookingStartHour }}</span>
+      </div>
+
+      <!-- End Hour -->
+      <div class="mb-4 w-full">
+        <label class="block text-gray-700 font-bold mb-2" for="end_hour">End Hour <span class="text-red-600">*</span></label>
+        <select (change)="calculatePrice()" formControlName="endHour" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="end_hour" name="end_hour" required>
+          <option value="">Select End Hour</option>
+          <option *ngFor="let hours of workingHoursRange" value="{{hours}}">{{hours}}</option>
+        </select>
+      </div>
+
+      <div class="mb-4 w-full bg-yellow-400 flex justify-between p-2">
+        <label class="text-gray-700 font-bold" for="license_plate">Total: </label>
+        <span class="text-gray-800">${{ calculatedPrice }}</span>
+      </div>
+      <button [disabled]="!bookingForm.valid" class="disabled:bg-green-300 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg" type="submit">Book</button>
+    </div>
+    <!-- Start Hour -->
+  </div>
+
+  <!-- Submit Button -->
+</form>
+</div>

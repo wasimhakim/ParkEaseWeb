@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppService } from '../../app.service';
-import { API_ACCESS_TOKEN } from '../../shared/common.const';
+import { API_ACCESS_TOKEN, USER_INFO } from '../../shared/common.const';
 
 @Component({
   selector: 'app-signup',
@@ -50,6 +50,7 @@ export class SignupComponent {
         if(this.signUpPage) {
           this.errorMessage = '';
           localStorage.setItem(API_ACCESS_TOKEN, token);
+          localStorage.setItem(USER_INFO, JSON.stringify(res.body.data))
           this.router.navigate(['/slots']);
         }
         if(this.customerPage) this.router.navigate(['/users/customers']);

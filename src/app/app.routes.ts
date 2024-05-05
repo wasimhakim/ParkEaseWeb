@@ -11,6 +11,8 @@ import { UsersComponent } from './components/users/users.component';
 import { AdminsComponent } from './components/users/admins/admins.component';
 import { CustomersComponent } from './components/users/customers/customers.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { BookComponent } from './components/slots/book/book.component';
+import { ReservationsComponent } from './components/reservations/reservations.component';
 import { AppGuard } from './app.guard';
 
 export const routes: Routes = [
@@ -22,6 +24,8 @@ export const routes: Routes = [
       { path: 'slots/create', component: CreateSlotComponent },
       { path: 'working-hours', component: WorkingHourComponent },
       { path: 'slots/:id/edit', component: EditSlotComponent },
+      { path: 'slots/:id/book', component: BookComponent },
+      { path: 'reservations', component: ReservationsComponent },
       {
         path: 'users', component: UsersComponent,
         children: [

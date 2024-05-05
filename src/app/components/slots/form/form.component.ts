@@ -1,8 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { WORKING_HOURS_RANGE } from '../../../shared/common.const';
-import { animate } from '@angular/animations';
+import { WORKING_HOURS_RANGE, CAR_TYPES } from '../../../shared/common.const';
 
 @Component({
   selector: 'app-form',
@@ -14,6 +13,7 @@ import { animate } from '@angular/animations';
 
 export class FormComponent {
   workingHoursRange: any;
+  carTypes = CAR_TYPES;
   @Input() errorMessage: string = '';
   @Input() slot: any;
 

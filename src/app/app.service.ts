@@ -25,8 +25,20 @@ export class AppService {
     return this.http.post(`${this.baseUrl}/signup`, user, { observe: 'response' });
   }
 
-  getSlots(parkingLotId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/slots`);
+  logout(): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/logout`);
+  }
+
+  getSlots(filters: any): Observable<any> {
+    const { date, hour, carType, shade, evCharging, disabledPeopleOnly } = filters;
+    const filterParams = [];
+    if (date) filterParams.push(`date=${date}`);
+    if (hour) filterParams.push(`hour=${hour}`);
+    if (carType) filterParams.push(`car_type=${carType}`);
+    if (shade) filterParams.push(`has_shade=${shade}`);
+    if (evCharging) filterParams.push(`ev_charging=${evCharging}`);
+    if (disabledPeopleOnly) filterParams.push(`disabled_people_only=${disabledPeopleOnly}`);
+    return this.http.get(`${this.baseUrl}/slots?${filterParams.join('&')}`);
   }
 
   getSlot(slotId: number): Observable<any> {
@@ -49,4 +61,15 @@ export class AppService {
     return this.http.post(`${this.baseUrl}/parking_working_hours`, workingHours);
   }
 
+  bookSlot(booking: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/reservations`, booking);
+  }
+
+  getReservations(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/reservations`);
+  }
+
+  updateReservation(reservationId: number, reservation: any): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/reservations/${reservationId}`, reservation);
+  }
 }

@@ -22,7 +22,7 @@ export class EditSlotComponent {
     private router: Router
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     // Get slot id from route params
     this.slotId = this.route.snapshot.params['id'];
     // Get slot details

@@ -9,7 +9,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     // Exclude login, signup, and logout requests
-    if (request.url.includes('/login') || request.url.includes('/signup') || request.url.includes('/logout')) {
+    if (request.url.includes('/login') || request.url.includes('/signup')) {
       return next.handle(request);
     }
 

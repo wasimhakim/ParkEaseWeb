@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { AppService } from '../../app.service';
-import { WORKING_HOURS_RANGE } from '../../shared/common.const';
+import { API_ACCESS_TOKEN, WORKING_HOURS_RANGE } from '../../shared/common.const';
 import { CommonModule } from '@angular/common';
 import { AuthorizationService } from '../../shared/authorization.service';
+import { USER_INFO } from '../../shared/common.const';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -18,7 +20,8 @@ export class NavigationComponent {
 
   constructor(
     private appService: AppService,
-    private authService: AuthorizationService
+    private authService: AuthorizationService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -34,5 +37,15 @@ export class NavigationComponent {
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  logout() {
+    this.appService.logout().subscribe((res) => {
+      window.localStorage.removeItem(USER_INFO);
+      window.localStorage.removeItem(API_ACCESS_TOKEN)
+      this.router.navigate(['/login']);
+    }, (error) => {
+      this.router.navigate(['/login']);
+    })
   }
 }

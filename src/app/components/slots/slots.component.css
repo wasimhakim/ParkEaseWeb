@@ -1,0 +1,4 @@
+input[type="checkbox"]:checked + button {
+  background-color: #6b7280;
+  color: white;
+}
