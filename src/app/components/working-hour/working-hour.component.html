@@ -1,0 +1,29 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-4">Update Working Hours</h1>
+
+  <!-- show errorMessage here -->
+  <span *ngIf="errorMessage" class="text-red-500 text-sm font-medium">{{ errorMessage }}</span>
+
+  <!-- Slot Creation Form -->
+  <form [formGroup]="workingHoursForm" (ngSubmit)="updateWorkingHours()">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="start_hour">Start Hour</label>
+      <select formControlName="startHour" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="start_hour" name="start_hour" required>
+        <option value="">Select Start Hour</option>
+        <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
+        <!-- Add more options as needed -->
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="end_hour">End Hour</label>
+      <select formControlName="endHour" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="end_hour" name="end_hour" required>
+        <option value="">Select End Hour</option>
+        <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
+      </select>
+    </div>
+
+    <!-- Submit Button -->
+    <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" type="submit">Update working hours</button>
+  </form>
+</div>

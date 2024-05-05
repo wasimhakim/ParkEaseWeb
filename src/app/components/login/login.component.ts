@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 // services
 import { AppService } from '../../app.service';
-import { API_ACCESS_TOKEN } from '../../shared/common.const';
+import { API_ACCESS_TOKEN, USER_INFO } from '../../shared/common.const';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent {
   errorMessage: string = '';
   constructor(
     private formBuilder: FormBuilder,
-    private appService: AppService
+    private appService: AppService,
+    private route: Router
   ) { }
 
   loginForm = this.formBuilder.group({
@@ -33,6 +35,9 @@ export class LoginComponent {
         if (token) {
           this.errorMessage = '';
           localStorage.setItem(API_ACCESS_TOKEN, token);
+          localStorage.setItem(USER_INFO, JSON.stringify(response.body.status.data.user))
+          console.log(response.body.status.data)
+          this.route.navigate(['/slots']);
         } else {
           this.errorMessage = 'Invalid email or password';
         }

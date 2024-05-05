@@ -1,0 +1,86 @@
+<!-- show errorMessage here -->
+<span *ngIf="errorMessage" class="text-red-500 text-sm font-medium">{{ errorMessage }}</span>
+
+<!-- Slot Creation Form -->
+<form [formGroup]="slotForm" (ngSubmit)="submitForm()">
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="number">Slot Number <span class="text-red-600">*</span></label>
+    <input formControlName="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="number" type="text" placeholder="Slot Number" name="number" required>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="start_hour">Start Hour <span class="text-red-600">*</span> </label>
+    <select formControlName="startHour" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="start_hour" name="start_hour" required>
+      <option value="">Select Start Hour</option>
+      <option *ngFor="let hours of workingHoursRange" value="{{hours}}">{{hours}}</option>
+    </select>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="end_hour">End Hour <span class="text-red-600">*</span></label>
+    <select formControlName="endHour" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="end_hour" name="end_hour" required>
+      <option value="">Select End Hour</option>
+      <option *ngFor="let hours of workingHoursRange" value="{{hours}}">{{hours}}</option>
+    </select>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="price">Price <span class="text-red-600">*</span></label>
+    <input formControlName="price"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="price" type="text" placeholder="Price" name="price" required>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="status">Status <span class="text-red-600">*</span></label>
+    <select formControlName="status"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="status" name="status" required>
+      <option value="available">Available</option>
+      <option value="unavailable">Unavailable</option>
+    </select>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="car_type">Car Type</label>
+    <select formControlName="carType" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="car_type" name="car_type" required>
+      <option value="">Select Car Type</option>
+      <option value="Sedan">Sedan</option>
+      <option value="SUV">SUV</option>
+      <option value="Truck">Truck</option>
+      <option value="Van">Van</option>
+      <option value="Hatchback">Hatchback</option>
+      <option value="Convertible">Convertible</option>
+      <option value="Coupe">Coupe</option>
+      <option value="Minivan">Minivan</option>
+      <option value="Station Wagon">Station Wagon</option>
+      <option value="Sports Car">Sports Car</option>
+      <option value="Electric Car">Electric Car</option>
+      <option value="Hybrid Car">Hybrid Car</option>
+    </select>
+  </div>
+
+  <div class="mb-4">
+    <input formControlName="hasShade" class="mr-2" id="has_shadow" type="checkbox" name="features" value="has_shadow">
+    <label class="text-gray-700 text-sm font-bold" for="has_shadow">Has Shadow</label>
+  </div>
+
+  <div class="mb-4">
+    <input formControlName="disabledPeopleOnly" class="mr-2" id="disabled_people_only" type="checkbox" name="features" value="disabled_people_only">
+    <label class="text-gray-700 text-sm font-bold" for="disabled_people_only">Disabled People Only</label>
+  </div>
+
+  <div class="mb-4">
+    <input formControlName="evCharging" class="mr-2" id="ev_charging" type="checkbox" name="features" value="ev_charging">
+    <label class="text-gray-700 text-sm font-bold" for="ev_charging">EV Charging</label>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="price">Cancellation Time Frame Hours</label>
+    <input formControlName="cancellationTimeFrameHours"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" placeholder="Cancellation Time Frame Hours" name="price" required>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="price">Cancellation Fee Percentage</label>
+    <input formControlName="cancellationFeePercentage"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Cancellation Fee Percentage" name="price" required>
+  </div>
+
+  <!-- Submit Button -->
+  <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg" type="submit">{{ slot ? 'Update Slot' : 'Create Slot' }}</button>
+</form>

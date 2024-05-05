@@ -1,0 +1,5 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-4">Edit Slot</h1>
+
+  <app-form [slot]="slotData" (formData)="updateSlot($event)" [errorMessage]="errorMessage"></app-form>
+</div>
