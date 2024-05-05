@@ -25,6 +25,7 @@ export class SlotsComponent {
   carTypes = CAR_TYPES;
   userInfo = JSON.parse(window.localStorage.getItem(USER_INFO) || '{}');
   slotBooked: boolean = false;
+  showFilers: boolean = false;
 
 
   constructor(
@@ -96,5 +97,9 @@ export class SlotsComponent {
     return this.userInfo.reservations?.find((reservation: any) => {
       return reservation.start_hour == this.filterForm.value.hour && reservation.date == this.filterForm.value.date && reservation.status == 'active'
     })
+  }
+
+  toggleFilters() {
+    this.showFilers = !this.showFilers;
   }
 }

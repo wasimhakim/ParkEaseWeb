@@ -1,32 +1,37 @@
 <div class="container mx-auto p-8">
   <div class="flex lg:flex-row flex-col justify-between items-center">
     <h1 class="text-3xl font-bold mb-4">Parking Slots</h1>
-    <a *ngIf="admin" href="/slots/create" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Add Slot</a>
-    <form [formGroup]="filterForm" (ngSubmit)="filterSlots()" *ngIf="!admin" class="flex lg:flex-row flex-col items-center gap-2 items-start">
-      <input formControlName="date" type="date" name="date" class="border border-gray-300 rounded-lg px-4 py-2" />
-      <select formControlName="hour" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-        <option value="">Hour</option>
-        <option *ngFor="let hour of hours" value="{{hour}}">{{hour}}</option>
-      </select>
+    <a *ngIf="admin" href="/slots/create" class="bg-blue-500 text-white px-4 py-2 rounded-lg mb-4">Add Slot</a>
+    <button (click)="toggleFilters()" *ngIf="!admin" class="bg-blue-500 text-white px-4 py-2 rounded-lg block mb-4" >Filters</button>
+    <form [formGroup]="filterForm" (ngSubmit)="filterSlots()" *ngIf="!admin && showFilers" class="flex lg:flex-row flex-col items-center gap-2 items-start">
+      <div class="flex gap-2 item-center">
+        <input formControlName="date" type="date" name="date" class="border border-gray-300 rounded-lg px-4 py-2" />
+        <select formControlName="hour" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+          <option value="">Hour</option>
+          <option *ngFor="let hour of hours" value="{{hour}}">{{hour}}</option>
+        </select>
+      </div>
       <select formControlName="carType" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="car_type" name="car_type" required>
         <option value="">Select Car Type</option>
         <option *ngFor="let carType of carTypes" value="{{carType}}">{{carType}}</option>
       </select>
-      <label class="inline-flex items-center mt-3">
-        <input formControlName="shade" type="checkbox" class="form-checkbox h-5 w-5 text-gray-600">
-        <span class="ml-2 text-gray-700">Shade</span>
-      </label>
+      <div class="flex gap-2 items-center">
+        <label class="inline-flex items-center mt-3">
+          <input formControlName="shade" type="checkbox" class="form-checkbox h-5 w-5 text-gray-600">
+          <span class="ml-2 text-gray-700">Shade</span>
+        </label>
 
-      <label class="inline-flex items-center mt-3">
-        <input formControlName="evCharging" type="checkbox" class="form-checkbox h-5 w-5 text-gray-600">
-        <span class="ml-2 text-gray-700">Ev Charging</span>
-      </label>
+        <label class="inline-flex items-center mt-3">
+          <input formControlName="evCharging" type="checkbox" class="form-checkbox h-5 w-5 text-gray-600">
+          <span class="ml-2 text-gray-700">Ev Charging</span>
+        </label>
 
-      <label class="inline-flex items-center mt-3">
-        <input formControlName="disabledPeopleOnly" type="checkbox" class="form-checkbox h-5 w-5 text-gray-600">
-        <span class="ml-2 text-gray-700">For Disabled</span>
-      </label>
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
+        <label class="inline-flex items-center mt-3">
+          <input formControlName="disabledPeopleOnly" type="checkbox" class="form-checkbox h-5 w-5 text-gray-600">
+          <span class="ml-2 text-gray-700">For Disabled</span>
+        </label>
+      </div>
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg mb-4">Search</button>
     </form>
   </div>
 
@@ -36,18 +41,20 @@
       'bg-[#7cd65d] cursor-pointer': slot.status === 'available',
       'bg-[#ff3f50] text-white': slot.status === 'occupied',
       'border-dashed border-4 border-[#d0dae3] text-[#d0dae3]': slot.status === 'unavailable'
-      }" class="relative lg:w-32 w-24 lg:h-56 h-32 p-4 font-bold rounded-lg flex text-center justify-center mb-4">
+      }" class="relative lg:w-32 w-24 lg:h-56 h-44 p-4 font-bold rounded-lg flex text-center justify-center mb-4">
       <div class="flex flex-col justify-between">
-        <span>P{{ slot.number }}</span>
-        <div class="text-sm font-normal text-gray-600">
+        <span class="text-sm" >P{{ slot.number }}</span>
+        <span class="text-sm">${{ slot.price }}</span>
+        <div class="lg:text-sm text-xs font-normal text-gray-600">
         <ul>
+            <li *ngIf="slot.features['car_type']">{{ slot.features['car_type'] }}</li>
             <li *ngIf="slot.features['has_shade']">Shade</li>
             <li *ngIf="slot.features['ev_charging']">EV Charging</li>
             <li *ngIf="slot.features['disabled_people_only']">For Disabled</li>
           </ul>
         </div>
         <!-- book button -->
-        <a *ngIf="slot.status === 'available'" href="/slots/{{slot.id}}/book?date={{filterForm.value.date}}&hour={{filterForm.value.hour}}" class="bg-blue-500 text-white px-4 py-2 rounded">Book</a>
+        <a *ngIf="slot.status === 'available' && !admin" href="/slots/{{slot.id}}/book?date={{filterForm.value.date}}&hour={{filterForm.value.hour}}" class="bg-blue-500 text-white md:text-base text-xs px-4 py-2 rounded">Book</a>
       </div>
 
       <a *ngIf="admin" href="/slots/{{slot.id}}/edit" class="absolute top-2 right-2 cursor-pointer text-blue-500 hover:text-gray-700 font-normal text-sm">Edit</a>

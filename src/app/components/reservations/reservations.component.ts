@@ -24,7 +24,7 @@ export class ReservationsComponent {
       this.userInfo.reservations = this.reservations;
       localStorage.setItem(USER_INFO, JSON.stringify(this.userInfo));
     }, (error) => {
-      this.errorMessage = 'Invalid reservations details'
+      window.location.href = '/login';
     });
   }
 
@@ -37,7 +37,13 @@ export class ReservationsComponent {
   }
 
   cancelReservation(reservation: any) {
-    this.updateReservation(reservation.id, { reservation: { status: 'cancelled' } });
+    const fee = this.calculateCancellationFee(reservation);
+    if (fee > 0) {
+      alert(`You will be charged a cancellation fee of $${fee}`);
+    }
+    if(confirm('Are you sure you want to cancel?') == true) {
+      this.updateReservation(reservation.id, { reservation: { status: 'cancelled' } });
+    }
   }
 
   updateReservation(reservationId: any, reservation: any) {
@@ -47,5 +53,15 @@ export class ReservationsComponent {
     }, (error) => {
       this.errorMessage = 'Invalid update'
     });
+  }
+
+  calculateCancellationFee(reservation: any): number {
+    const diff = (new Date().getHours()) - reservation.start_hour.split(':')[0];
+    console.log(diff)
+    if (diff < reservation.cacellation_time_frame_hour) {
+      return reservation.price * (parseFloat(reservation.cancellation_fee_percentage || 0.0) / 100);
+    } else {
+      return 0;
+    }
   }
 }

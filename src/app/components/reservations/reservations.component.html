@@ -3,7 +3,7 @@
 
   <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
     <thead class="text-white">
-      <tr class="bg-gray-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+      <tr  *ngFor="let reservation of reservations"class="bg-gray-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
         <th class="p-3 text-left">Slot</th>
         <th class="p-3 text-left">Price</th>
         <th class="p-3 text-left">Date</th>
@@ -23,11 +23,11 @@
         <td class="border-grey-light border hover:bg-gray-100 p-3">
           <span class="px-2 py-1 rounded-full bg-gray-500 text-white">{{ reservation.status || 'N/A' }}</span>
         </td>
-        <td class="flex flex-col gap-4 text-center text-white md:text-center border-grey-light border hover:bg-gray-100 p-3 hover:font-medium cursor-pointer">
-          <button (click)="checkIn(reservation)" *ngIf="reservation?.status == 'active'" class="rounded-lg bg-blue-400 hover:text-blue-600 hover:font-medium">Check In</button>
+        <td class="flex lg:flex-col gap-4 text-center text-white md:text-center border-grey-light border hover:bg-gray-100 p-3 hover:font-medium cursor-pointer">
+          <button (click)="checkIn(reservation)" *ngIf="reservation?.status == 'active'" class="rounded-lg bg-blue-400 hover:text-blue-600 hover:font-medium px-4">Check In</button>
           <!-- check out button -->
-          <button *ngIf="reservation?.check_in && !reservation?.check_out" (click)="checkOut(reservation)" class="rounded-lg bg-yellow-400 hover:text-green-600 hover:font-medium">Check Out</button>
-          <button (click)="cancelReservation(reservation)" *ngIf="!reservation?.check_in && reservation?.status == 'active'"  class="rounded-lg bg-red-400 hover:text-red-600 hover:font-medium">Cancel</button>
+          <button *ngIf="reservation?.check_in && !reservation?.check_out" (click)="checkOut(reservation)" class="rounded-lg bg-yellow-400 hover:text-green-600 hover:font-medium px-4">Check Out</button>
+          <button (click)="cancelReservation(reservation)" *ngIf="!reservation?.check_in && reservation?.status == 'active'"  class="rounded-lg bg-red-400 hover:text-red-600 hover:font-medium px-4">Cancel</button>
         </td>
       </tr>
     </tbody>

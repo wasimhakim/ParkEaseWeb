@@ -37,7 +37,7 @@ export class LoginComponent {
           localStorage.setItem(API_ACCESS_TOKEN, token);
           localStorage.setItem(USER_INFO, JSON.stringify(response.body.status.data.user))
           console.log(response.body.status.data)
-          this.route.navigate(['/slots']);
+          window.location.href = '/slots';
         } else {
           this.errorMessage = 'Invalid email or password';
         }

@@ -21,12 +21,17 @@
     </div>
 
     <!-- Features -->
-    <div class="mb-4" *ngIf="slot?.features">
+    <div class="mb-4 flex justify-center" *ngIf="slot?.features">
       <ul class="list-disc list-inside text-gray-800">
         <li *ngIf="slot?.features['has_shade']">Shade</li>
         <li *ngIf="slot?.features['ev_charging']">EV Charging</li>
         <li *ngIf="slot?.features['disabled_people_only']">For Disabled</li>
       </ul>
+    </div>
+
+    <div *ngIf="slot.cancellation_time_frame_hours" class="mb-4 text-sm text-center text-gray-600">
+      <p class="italic">If cancelled after {{ slot.cancellation_time_frame_hours || 0 }} hours of Start hour</p>
+      <p class="italic">Cancellation charges will be {{ slot.cancellation_fee_percentage || 0 }}%</p>
     </div>
 
     <div class="flex flex-col items-end" *ngIf="canBook">

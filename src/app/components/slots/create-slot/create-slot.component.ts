@@ -29,7 +29,7 @@ export class CreateSlotComponent {
       price: formData.price,
       status: formData.status,
       cancellation_time_frame_hours: formData.cancellationTimeFrameHours,
-      cancellation_fee_precentage: formData.cancellationFeePercentage,
+      cancellation_fee_percentage: formData.cancellationFeePercentage,
       features: {
         car_type: formData.carType,
         has_shade: formData.hasShade,
