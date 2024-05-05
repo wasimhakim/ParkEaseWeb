@@ -5,11 +5,17 @@ import { USER_INFO } from "./common.const";
   providedIn: 'root'
 })
 export class AuthorizationService {
-  userInfo = JSON.parse(localStorage.getItem(USER_INFO) || '')
+  userInfo: any = localStorage.getItem(USER_INFO);
   restrictedUrls = ['create', 'edit', 'working-hours', 'users']
 
+  constructor() {
+    if(this.userInfo) {
+      this.userInfo = JSON.parse(this.userInfo)
+    }
+  }
+
   isAdmin() {
-    return this.userInfo.role == 'Admin'
+    return this.userInfo?.role == 'Admin'
   }
 
   restricted(pathname: string) {
